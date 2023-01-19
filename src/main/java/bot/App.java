@@ -29,8 +29,15 @@ public class App {
             updates.forEach(update -> {
                 System.out.println(update);
                 long chatId = update.message().chat().id();
+
+
+                System.out.println();
+
+
+
+
                 String userText = update.message().text();
-                bot.execute(new SendMessage( chatId, userText));
+                bot.execute(new SendMessage(chatId, userText));
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
