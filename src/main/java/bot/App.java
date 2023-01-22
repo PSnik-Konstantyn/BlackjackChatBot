@@ -2,7 +2,9 @@ package bot;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
-import com.pengrad.telegrambot.model.request.*;
+import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
+import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
+import com.pengrad.telegrambot.request.AnswerCallbackQuery;
 import com.pengrad.telegrambot.request.EditMessageText;
 import com.pengrad.telegrambot.request.SendMessage;
 
@@ -38,10 +40,15 @@ public class App {
 
                     bot.execute(sendInlineKeyBoardMessage(chatId));
 
-                } else if (update.callbackQuery() != null){
-                    bot.execute(new SendMessage(update.callbackQuery().message().chat().id(), update.callbackQuery().from().firstName()+" сказал, что он гей"));
-                    EditMessageText editMessageText = new EditMessageText(update.callbackQuery().message().chat().id(), update.callbackQuery().message().messageId()-2, "больше не гей");
+                } else if (update.callbackQuery().data().equals("pressed")){
+                    bot.execute(new SendMessage(update.callbackQuery().message().chat().id(), update.callbackQuery().from().username()+" сказал, что он гей"));
+
+                } else if (update.callbackQuery().data().equals("edit")){
+                    EditMessageText editMessageText = new EditMessageText(update.callbackQuery().message().chat().id(), update.callbackQuery().message().messageId()+1, "больше не гей");
                     bot.execute(editMessageText);
+                } else if (update.callbackQuery().data().equals("alert")){
+                    AnswerCallbackQuery answerCallbackQuery = new AnswerCallbackQuery(update.callbackQuery().id());
+                    bot.execute(answerCallbackQuery.text("fucking alert").showAlert(true));
                 }
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
@@ -51,11 +58,11 @@ public class App {
     public static SendMessage sendInlineKeyBoardMessage(long chatId) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         InlineKeyboardButton button1 = new InlineKeyboardButton("Я гей");
-        InlineKeyboardButton button2 = new InlineKeyboardButton("И мне повезло");
-        InlineKeyboardButton button3 = new InlineKeyboardButton(" gay am i ");
+        InlineKeyboardButton button2 = new InlineKeyboardButton("Показать алерт");
+        InlineKeyboardButton button3 = new InlineKeyboardButton("edit");
         button1.callbackData("pressed");
-        button2.callbackData("pressed");
-        button3.callbackData("pressed");
+        button2.callbackData("alert");
+        button3.callbackData("edit");
         inlineKeyboardMarkup.addRow(button1,button2);
         inlineKeyboardMarkup.addRow(button3);
         return new SendMessage(chatId, "Ты гей?").replyMarkup(inlineKeyboardMarkup);
