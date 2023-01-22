@@ -10,6 +10,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class App {
@@ -46,9 +47,13 @@ public class App {
                 } else if (update.callbackQuery().data().equals("edit")){
                     EditMessageText editMessageText = new EditMessageText(update.callbackQuery().message().chat().id(), update.callbackQuery().message().messageId()+1, "больше не гей");
                     bot.execute(editMessageText);
-                } else if (update.callbackQuery().data().equals("alert")){
+                } else if (update.callbackQuery().data().equals("alert") && update.callbackQuery().from().id() == 430823029){
                     AnswerCallbackQuery answerCallbackQuery = new AnswerCallbackQuery(update.callbackQuery().id());
-                    bot.execute(answerCallbackQuery.text("fucking alert").showAlert(true));
+                    bot.execute(answerCallbackQuery.text("fucking alert for Felix Nani").showAlert(true));
+                } else if (update.callbackQuery().data().equals("alert")){
+                    System.out.println(update.callbackQuery().from().id());
+                    AnswerCallbackQuery answerCallbackQuery = new AnswerCallbackQuery(update.callbackQuery().id());
+                    bot.execute(answerCallbackQuery.text("fucking alert for Merry Mike").showAlert(true));
                 }
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
