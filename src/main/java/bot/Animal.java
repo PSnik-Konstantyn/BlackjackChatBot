@@ -1,6 +1,7 @@
 package bot;
 
-public class Animal {
+import java.io.Serializable;
+public class Animal implements Serializable{
     String name;
     int age;
 
