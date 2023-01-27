@@ -44,17 +44,17 @@ public class BotController {
                 long chatId = update.message().chat().id();
                 String messageText = update.message().text();
 
-                if(!playerDBMap.containsKey(String.valueOf(playerId))) {
+                if (!playerDBMap.containsKey(String.valueOf(playerId))) {
                     accountRegistration(playerName, playerId, chatId);
                 }
 
                 // for testing
                 else {
-                    System.out.println( playerDBMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
+                    System.out.println(playerDBMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
                 }
 
-                if (!(update.message() == null) && !(messageText == null)){
-                    if (messageText.equals("/get_daily")){
+                if (!(update.message() == null) && !(messageText == null)) {
+                    if (messageText.equals("/get_daily")) {
 
                     }
                 }

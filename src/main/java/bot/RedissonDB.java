@@ -17,7 +17,7 @@ public class RedissonDB {
         newPlayer.setChatId(chatId);
         newPlayer.setBasicBet(1);
         newPlayer.setBalance(0);
-        playerDBMap.put(String.valueOf(playerId),newPlayer);
+        playerDBMap.put(String.valueOf(playerId), newPlayer);
 
         System.out.println(playerName + " registered");
 

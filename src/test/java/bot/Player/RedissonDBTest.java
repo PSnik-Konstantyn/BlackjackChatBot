@@ -6,6 +6,7 @@ import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class RedissonDBTest {
 
     @Test
