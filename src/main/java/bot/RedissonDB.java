@@ -1,14 +1,15 @@
-package bot.Player;
+package bot;
 
+import bot.Player.Player;
 import org.redisson.Redisson;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
-public class Registration {
-    public static void playerRegistration(String playerName, long playerId, long chatId) {
+public class RedissonDB {
+    static RedissonClient redisson = Redisson.create();
+    static RMap<String, Player> playerDBMap = redisson.getMap("playerBaseMap");
 
-        RedissonClient redisson = Redisson.create();
-        RMap<String, Player> playerBaseMap = redisson.getMap("playerBaseMap");
+    public static void accountRegistration(String playerName, long playerId, long chatId) {
 
         Player newPlayer = new Player();
         newPlayer.setPlayerName(playerName);
@@ -16,7 +17,7 @@ public class Registration {
         newPlayer.setChatId(chatId);
         newPlayer.setBasicBet(1);
         newPlayer.setBalance(0);
-        playerBaseMap.put(String.valueOf(playerId),newPlayer);
+        playerDBMap.put(String.valueOf(playerId),newPlayer);
 
         System.out.println(playerName + " registered");
 

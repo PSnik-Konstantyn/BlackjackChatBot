@@ -6,10 +6,10 @@ import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
 import static org.junit.jupiter.api.Assertions.*;
-class RegistrationTest {
+class RedissonDBTest {
 
     @Test
-    void playerRegistration() {
+    void accountRegistration() {
         RedissonClient redisson = Redisson.create();
         RMap<String, Player> testBaseMap = redisson.getMap("testBaseMap");
 

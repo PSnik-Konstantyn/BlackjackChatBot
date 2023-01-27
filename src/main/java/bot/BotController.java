@@ -12,7 +12,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import static bot.Player.Registration.playerRegistration;
+import static bot.RedissonDB.accountRegistration;
 
 public class BotController {
     public static void main(String[] args) {
@@ -31,27 +31,33 @@ public class BotController {
 
         //:TODO create new method with config for redissonDB
         RedissonClient redisson = Redisson.create();
-        RMap<String, Player> playerBaseMap = redisson.getMap("playerBaseMap");
+        RMap<String, Player> playerDBMap = redisson.getMap("playerDBMap");
 
         TelegramBot bot = new TelegramBot(TOKEN);
 
         bot.setUpdatesListener(updates -> {
             updates.forEach(update -> {
+
+                //:TODO create getting info from buttons too (if player presses button update message equals null)
                 String playerName = update.message().from().firstName();
                 long playerId = update.message().from().id();
                 long chatId = update.message().chat().id();
                 String messageText = update.message().text();
 
-                if(!playerBaseMap.containsKey(String.valueOf(playerId))) {
-                    playerRegistration(playerName, playerId, chatId);
+                if(!playerDBMap.containsKey(String.valueOf(playerId))) {
+                    accountRegistration(playerName, playerId, chatId);
                 }
 
                 // for testing
                 else {
-                    System.out.println( playerBaseMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
+                    System.out.println( playerDBMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
                 }
 
+                if (!(update.message() == null) && !(messageText == null)){
+                    if (messageText.equals("/get_daily")){
 
+                    }
+                }
 
                 System.out.println(update);
                 String userText = update.message().text();
