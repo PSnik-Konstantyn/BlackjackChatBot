@@ -29,8 +29,9 @@ public class BotController {
             e.printStackTrace();
         }
 
+        //:TODO create new method with config for redissonDB
         RedissonClient redisson = Redisson.create();
-        RMap<String, Player> playerBaseMap = redisson.getMap("myMap");
+        RMap<String, Player> playerBaseMap = redisson.getMap("playerBaseMap");
 
         TelegramBot bot = new TelegramBot(TOKEN);
 
@@ -40,14 +41,22 @@ public class BotController {
                 long playerId = update.message().from().id();
                 long chatId = update.message().chat().id();
                 String messageText = update.message().text();
+
                 if(!playerBaseMap.containsKey(String.valueOf(playerId))) {
-                    playerRegistration(playerName, playerId, chatId, playerBaseMap);
-                } else {
-                    System.out.println("already registered");
+                    playerRegistration(playerName, playerId, chatId);
                 }
+
+                // for testing
+                else {
+                    System.out.println( playerBaseMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
+                }
+
+
+
                 System.out.println(update);
                 String userText = update.message().text();
                 bot.execute(new SendMessage(chatId, userText));
+
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
