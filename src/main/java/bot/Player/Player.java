@@ -1,6 +1,12 @@
 package bot.Player;
 
-public class Player {
+
+import kotlin.jvm.internal.SerializedIr;
+
+import java.io.Serializable;
+
+
+public class Player implements Serializable {
 
     long playerId;
     String playerName;
