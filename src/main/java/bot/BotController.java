@@ -46,10 +46,7 @@ public class BotController {
 
                 if (!playerDBMap.containsKey(String.valueOf(playerId))) {
                     accountRegistration(playerName, playerId, chatId);
-                }
-
-                // for testing
-                else {
+                } else {
                     System.out.println(playerDBMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
                 }
 

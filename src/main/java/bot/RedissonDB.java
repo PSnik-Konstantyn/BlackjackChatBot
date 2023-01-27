@@ -7,7 +7,7 @@ import org.redisson.api.RedissonClient;
 
 public class RedissonDB {
     static RedissonClient redisson = Redisson.create();
-    static RMap<String, Player> playerDBMap = redisson.getMap("playerBaseMap");
+    static RMap<String, Player> playerDBMap = redisson.getMap("playerDBMap");
 
     public static void accountRegistration(String playerName, long playerId, long chatId) {
 
