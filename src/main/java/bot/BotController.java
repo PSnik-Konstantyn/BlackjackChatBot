@@ -12,9 +12,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import static bot.Chat.Messages.sendMessage;
+import static bot.Player.DailyBonus.getDailyBonus;
 import static bot.RedissonDB.accountRegistration;
 
+
 public class BotController {
+
+    static RedissonClient redisson = Redisson.create();
+    public static RMap<String, Player> playerDBMap = redisson.getMap("playerDBMap");
+
     public static void main(String[] args) {
 
         String TOKEN = "";
@@ -29,16 +36,13 @@ public class BotController {
             e.printStackTrace();
         }
 
-        //:TODO create new method with config for redissonDB
-        RedissonClient redisson = Redisson.create();
-        RMap<String, Player> playerDBMap = redisson.getMap("playerDBMap");
-
         TelegramBot bot = new TelegramBot(TOKEN);
 
         bot.setUpdatesListener(updates -> {
             updates.forEach(update -> {
 
                 //:TODO create getting info from buttons too (if player presses button update message equals null)
+
                 String playerName = update.message().from().firstName();
                 long playerId = update.message().from().id();
                 long chatId = update.message().chat().id();
@@ -52,13 +56,14 @@ public class BotController {
 
                 if (!(update.message() == null) && !(messageText == null)) {
                     if (messageText.equals("/get_daily")) {
-
+                        getDailyBonus(playerId);
                     }
                 }
 
                 System.out.println(update);
                 String userText = update.message().text();
-                bot.execute(new SendMessage(chatId, userText));
+                sendMessage(new SendMessage(chatId, userText));
+                sendMessage(new SendMessage(chatId, "Баланс " + playerDBMap.get(String.valueOf(playerId)).getBalance()));
 
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;

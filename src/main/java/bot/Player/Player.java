@@ -4,6 +4,7 @@ package bot.Player;
 import kotlin.jvm.internal.SerializedIr;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 public class Player implements Serializable {
@@ -14,6 +15,15 @@ public class Player implements Serializable {
     int basicBet;
 
     int balance;
+    Date lastTimeBonus;
+
+    public Date getLastTimeBonus() {
+        return lastTimeBonus;
+    }
+
+    public void setLastTimeBonus(Date lastTimeBonus) {
+        this.lastTimeBonus = lastTimeBonus;
+    }
 
     public long getPlayerId() {
         return playerId;
@@ -54,6 +64,7 @@ public class Player implements Serializable {
     public void setBalance(int balance) {
         this.balance = balance;
     }
+
 
 
 }
