@@ -47,17 +47,20 @@ public class BotController {
                 long playerId = 0L;
                 long chatId = 0L;
                 String messageText = "";
+                int messageId = 0;
 
                 if (update.callbackQuery() == null) {
                     playerName = update.message().from().username();
                     playerId = update.message().from().id();
                     chatId = update.message().chat().id();
                     messageText = update.message().text();
-                } else if (update.message() == null){
+                    messageId = update.message().messageId();
+                } else if (update.message() == null) {
                     playerName = update.callbackQuery().from().username();
                     playerId = update.callbackQuery().from().id();
-                    chatId = update.callbackQuery().from().id();
+                    chatId = update.callbackQuery().message().chat().id();
                     messageText = update.callbackQuery().data();
+                    messageId = update.callbackQuery().message().messageId();
                 }
 
                 if (!playerDBMap.containsKey(String.valueOf(playerId))) {
@@ -68,15 +71,11 @@ public class BotController {
 
                 if (!(update.message() == null) || !(update.callbackQuery() == null) && !(messageText == null)) {
                     if (messageText.equals("/get_daily")) {
-                        getDailyBonus(playerId);
+                        getDailyBonus(playerId, messageId, chatId);
                     }
                 }
-
                 System.out.println(update);
-                String userText = update.message().text();
-                sendMessage(new SendMessage(chatId, userText));
-                sendMessage(new SendMessage(chatId, "Баланс " + playerDBMap.get(String.valueOf(playerId)).getBalance()));
-
+                bot.execute(new SendMessage(chatId, messageText));
             });
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });

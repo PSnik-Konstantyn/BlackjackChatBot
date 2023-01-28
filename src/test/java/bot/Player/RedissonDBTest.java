@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RedissonDBTest {
 
@@ -21,7 +21,6 @@ class RedissonDBTest {
         Player testPlayer = new Player();
         testPlayer.setPlayerName("Felix");
         testPlayer.setPlayerId(1L);
-        testPlayer.setChatId(10L);
         testPlayer.setBasicBet(11);
         testPlayer.setBalance(111);
         String sourceDate = "2022-09-25";
