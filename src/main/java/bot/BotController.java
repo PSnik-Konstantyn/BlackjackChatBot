@@ -42,6 +42,7 @@ public class BotController {
             updates.forEach(update -> {
 
                 //:TODO create getting info from buttons too (if player presses button update message equals null)
+                //update.callbackQuery().from().username()
 
                 String playerName = update.message().from().firstName();
                 long playerId = update.message().from().id();
