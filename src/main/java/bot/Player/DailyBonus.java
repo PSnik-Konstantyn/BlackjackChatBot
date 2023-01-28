@@ -12,10 +12,11 @@ import static bot.RedissonDB.changePlayersBalance;
 public class DailyBonus {
     public static void getDailyBonus(long playerId) {
         Player currentPlayer = playerDBMap.get(String.valueOf(playerId));
-        Date lastTimePlusOneDay = DateUtil.addDays(currentPlayer.getLastTimeBonus(), 0);
+        Date lastTimePlusOneDay = DateUtil.addDays(currentPlayer.getLastTimeBonus(), 1);
         Date currentDate = new Date();
-
-        if (lastTimePlusOneDay.getTime() < currentDate.getTime()) {
+        System.out.println("last" + lastTimePlusOneDay);
+        System.out.println("current" + currentDate);
+        if (lastTimePlusOneDay.before(currentDate)) {
             changePlayersBalance(playerId, 10);
         } else {
             long chatId = currentPlayer.getChatId();
@@ -23,5 +24,4 @@ public class DailyBonus {
             sendMessage(message);
         }
     }
-
 }
