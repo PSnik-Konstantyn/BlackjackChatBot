@@ -42,12 +42,23 @@ public class BotController {
             updates.forEach(update -> {
 
                 //:TODO create getting info from buttons too (if player presses button update message equals null)
-                //update.callbackQuery().from().username()
 
-                String playerName = update.message().from().firstName();
-                long playerId = update.message().from().id();
-                long chatId = update.message().chat().id();
-                String messageText = update.message().text();
+                String playerName = "";
+                long playerId = 0L;
+                long chatId = 0L;
+                String messageText = "";
+
+                if (update.callbackQuery() == null) {
+                    playerName = update.message().from().username();
+                    playerId = update.message().from().id();
+                    chatId = update.message().chat().id();
+                    messageText = update.message().text();
+                } else if (update.message() == null){
+                    playerName = update.callbackQuery().from().username();
+                    playerId = update.callbackQuery().from().id();
+                    chatId = update.callbackQuery().from().id();
+                    messageText = update.callbackQuery().data();
+                }
 
                 if (!playerDBMap.containsKey(String.valueOf(playerId))) {
                     accountRegistration(playerName, playerId, chatId);
@@ -55,7 +66,7 @@ public class BotController {
                     System.out.println(playerDBMap.get(String.valueOf(playerId)).getPlayerName() + " already registered");
                 }
 
-                if (!(update.message() == null) && !(messageText == null)) {
+                if (!(update.message() == null) || !(update.callbackQuery() == null) && !(messageText == null)) {
                     if (messageText.equals("/get_daily")) {
                         getDailyBonus(playerId);
                     }
