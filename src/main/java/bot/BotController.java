@@ -41,8 +41,6 @@ public class BotController {
         bot.setUpdatesListener(updates -> {
             updates.forEach(update -> {
 
-                //:TODO create getting info from buttons too (if player presses button update message equals null)
-
                 String playerName = "";
                 long playerId = 0L;
                 long chatId = 0L;

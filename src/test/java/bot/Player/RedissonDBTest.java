@@ -43,6 +43,5 @@ class RedissonDBTest {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
     }
 }

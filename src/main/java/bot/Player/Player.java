@@ -7,12 +7,11 @@ import java.util.Date;
 
 public class Player implements Serializable {
 
-    long playerId;
-    String playerName;
-    int basicBet;
-
-    int balance;
-    Date lastTimeBonus;
+    private long playerId;
+    private String playerName;
+    private int basicBet;
+    private int balance;
+    private Date lastTimeBonus;
 
     public Date getLastTimeBonus() {
         return lastTimeBonus;
